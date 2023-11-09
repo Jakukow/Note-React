@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Ionicons from "@expo/vector-icons/";
 import NoteList from "../Components/NoteList";
 import PlusButton from "../Buttons/PlusButton";
+import { Colors } from "../Util/Colors";
 
 const NoteListsView = () => {
   return (
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     height: "100%",
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
-    backgroundColor: "#e6f7ed",
+    backgroundColor: Colors.note,
   },
   textContainer: {
     width: "100%",
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 100,
     backgroundColor: "white",
+    marginTop: 20,
 
     marginBottom: 100,
     borderTopRightRadius: 50,

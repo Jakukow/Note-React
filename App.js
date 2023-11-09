@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import NoteListsView from "./Screens/NoteListsView";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { Colors } from "./Util/Colors";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ export default function App() {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: "#b7e3c8" },
+            contentStyle: { backgroundColor: Colors.background },
           }}
         >
           <Stack.Screen name="NoteList" component={NoteListsView} />

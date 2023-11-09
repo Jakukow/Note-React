@@ -2,11 +2,16 @@ import { Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { View } from "react-native";
+import { Colors } from "../Util/Colors";
 
 const PlusButton = () => {
   return (
-    <Pressable style={styles.ButtonFrame}>
-      <Ionicons name="add-sharp" color="black" size={50} />
+    <Pressable
+      style={({ pressed }) =>
+        pressed ? [styles.ButtonFrame, styles.pressed] : styles.ButtonFrame
+      }
+    >
+      <Ionicons style={styles.icon} name="add-sharp" color="white" size={50} />
     </Pressable>
   );
 };
@@ -20,10 +25,17 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     position: "absolute",
-    top: -20,
-    borderWidth: 2,
-    backgroundColor: "white",
-    borderColor: "black",
+    top: -30,
+    borderWidth: 6,
+    backgroundColor: Colors.plusButton,
+    borderColor: Colors.note,
     borderRadius: 50,
+  },
+  icon: {
+    alignSelf: "center",
+    paddingLeft: 3,
+  },
+  pressed: {
+    opacity: 0.7,
   },
 });
