@@ -1,17 +1,20 @@
 import { FlatList } from "react-native";
-import { NOTES } from "../Util/DUMMY_DATA";
-import SingleNoteView from "./SingleNoteView";
 
+import SingleNoteView from "./SingleNoteView";
+import { useSelector } from "react-redux";
 const NoteList = () => {
+  const notes = useSelector((state) => state.note.notes);
+
   return (
     <FlatList
-      data={NOTES}
+      data={notes}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <SingleNoteView
           title={item.title}
           description={item.text}
           category_icon={item.icon_category}
+          id={item.id}
         />
       )}
     />

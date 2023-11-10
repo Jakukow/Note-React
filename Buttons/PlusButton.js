@@ -1,12 +1,14 @@
 import { Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import { Colors } from "../Util/Colors";
 
 const PlusButton = () => {
+  const navigation = useNavigation();
   return (
     <Pressable
+      onPress={() => navigation.navigate("NewNoteForm")}
       style={({ pressed }) =>
         pressed ? [styles.ButtonFrame, styles.pressed] : styles.ButtonFrame
       }

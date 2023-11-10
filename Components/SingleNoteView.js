@@ -3,8 +3,11 @@ import { StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CustomButton from "../Buttons/CustomButton";
 import { Colors } from "../Util/Colors";
+import { useDispatch } from "react-redux";
+import { deleteNote } from "../Util/noteSlice";
 
-const SingleNoteView = ({ title, description, category_icon }) => {
+const SingleNoteView = ({ title, description, category_icon, id }) => {
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={styles.categoryIcon}>
@@ -36,7 +39,7 @@ const SingleNoteView = ({ title, description, category_icon }) => {
           name="trash"
           size={24}
           color={Colors.plusButton}
-          onPress={() => {}}
+          onPress={() => dispatch(deleteNote(id))}
         />
       </View>
     </View>

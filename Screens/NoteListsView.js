@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 100,
     height: "100%",
-    borderTopRightRadius: 50,
+
     borderTopLeftRadius: 50,
     backgroundColor: Colors.note,
   },
