@@ -7,6 +7,7 @@ import { Colors } from "./Util/Colors";
 import { store } from "./store";
 import { Provider } from "react-redux";
 import NewNoteForm from "./Screens/NewNoteForm";
+import NewNoteView from "./Screens/NewNoteView";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,11 @@ export default function App() {
           >
             <Stack.Screen name="NoteList" component={NoteListsView} />
             <Stack.Screen name="NewNoteForm" component={NewNoteForm} />
+            <Stack.Screen
+              name="NewNoteView"
+              component={NewNoteView}
+              options={{ gestureEnabled: false }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
