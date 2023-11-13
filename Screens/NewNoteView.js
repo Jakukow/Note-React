@@ -32,7 +32,12 @@ export default function NewNoteView({ navigation, route }) {
       .replace("\n", " ")
       .trim();
     const replaceWhiteSpace = replaceHTML.replace(/&nbsp;/g, "").trim();
-    const text = htmlToText(descHTML).replaceAll("\n", ", ");
+    let text = htmlToText(descHTML);
+    const indexSecondNewLine = text.indexOf("\n", text.indexOf("\n") + 1);
+
+    if (indexSecondNewLine !== -1) {
+      text = text.slice(0, indexSecondNewLine);
+    }
     if (!text) return;
     const date = new Date().toISOString();
     const createdNote = {
