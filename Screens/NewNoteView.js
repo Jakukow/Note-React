@@ -1,52 +1,80 @@
-import React from "react";
+import { useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TouchableOpacity,
-  Text,
-} from "react-native";
-import { View } from "react-native";
-import QuillEditor, { QuillToolbar } from "react-native-cn-quill";
-
+  actions,
+  RichEditor,
+  RichToolbar,
+} from "react-native-pell-rich-editor";
+import { Colors } from "../Util/Colors";
 import TextButton from "../Buttons/TextButton";
+export default function NewNoteView() {
+  const richText = useRef();
 
-const NewNoteView = () => {
-  const _editor = React.createRef();
-  const handleBackgroundPress = () => {
-    Keyboard.dismiss();
+  const [descHTML, setDescHTML] = useState("");
+
+  const richTextHandle = (descriptionText) => {
+    if (descriptionText) {
+      setDescHTML(descriptionText);
+    } else {
+      setDescHTML("");
+    }
   };
+
   return (
-    <TouchableWithoutFeedback onPress={() => _editor.current.blur()}>
-      <View style={styles.wrapper}>
-        <QuillEditor style={styles.editor} ref={_editor} />
-        <View style={styles.toolbar}>
-          <QuillToolbar
-            toolbar
-            editor={_editor}
-            options="basic"
-            theme={"light"}
-          />
-        </View>
+    <View style={styles.container}>
+      <View style={styles.richTextContainer}>
+        <RichToolbar
+          editor={richText}
+          iconTint="white"
+          actions={[
+            actions.setBold,
+            actions.setItalic,
+            actions.insertBulletsList,
+            actions.insertOrderedList,
+            actions.insertLink,
+            actions.setStrikethrough,
+            actions.setUnderline,
+            actions.checkboxList,
+          ]}
+          style={styles.richTextToolbarStyle}
+        />
+        <RichEditor
+          initialFocus={true}
+          scrollEnabled={true}
+          ref={richText}
+          onChange={richTextHandle}
+          placeholder="Type here..."
+          style={styles.richTextEditorStyle}
+          initialHeight={360}
+        />
+        <TextButton>Save</TextButton>
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   );
-};
+}
 
-export default NewNoteView;
 const styles = StyleSheet.create({
-  toolbar: {
-    marginTop: 60,
+  container: {
+    padding: 20,
+    alignItems: "center",
   },
-  wrapper: {
-    height: "60%",
-  },
-  editor: {
-    marginTop: 20,
 
-    borderRadius: 10,
-    marginHorizontal: 30,
-    marginVertical: 5,
-    backgroundColor: "white",
+  richTextContainer: {
+    width: "100%",
+    marginTop: 50,
+  },
+
+  richTextEditorStyle: {
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    height: 360,
+    maxHeight: 360,
+    fontSize: 20,
+  },
+
+  richTextToolbarStyle: {
+    backgroundColor: Colors.plusButton,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
 });
