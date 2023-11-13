@@ -4,13 +4,60 @@ import Input from "../Components/Input";
 import { SelectList } from "react-native-dropdown-select-list";
 import { data } from "../Util/data";
 import TextButton from "../Buttons/TextButton";
-import { Keyboard } from "react-native";
+
+import { useState } from "react";
 
 const NewNoteForm = ({ navigation }) => {
+  const [formHandler, setFormHandler] = useState({
+    title: {
+      value: "",
+      isValid: true,
+    },
+    category: { value: null, isValid: true },
+  });
   const NextHandler = () => {
-    navigation.navigate("NewNoteView");
+    const titleIsValid = formHandler.title.value.trim().length > 0;
+    const categoryIsValid = !!formHandler.category.value;
+    if (!titleIsValid || !categoryIsValid) {
+      setFormHandler((prevaState) => ({
+        title: { value: prevaState.title.value, isValid: titleIsValid },
+        category: {
+          value: prevaState.category.value,
+          isValid: categoryIsValid,
+        },
+      }));
+      return;
+    }
+    if (formHandler.category.value === "Gym") {
+      formHandler.category.value = "barbell-outline";
+    }
+    if (formHandler.category.value === "General") {
+      formHandler.category.value = "attach-outline";
+    }
+    if (formHandler.category.value === "Science") {
+      formHandler.category.value = "book";
+    }
+    if (formHandler.category.value === "Shopping") {
+      formHandler.category.value = "cart";
+    }
+    navigation.navigate("NewNoteView", {
+      title: formHandler.title.value,
+      category: formHandler.category.value,
+    });
   };
-
+  const inputHandler = (text) => {
+    setFormHandler((prevState) => ({
+      ...prevState,
+      title: { value: text, isValid: true },
+    }));
+  };
+  const selectHandler = (text) => {
+    setFormHandler((prevState) => ({
+      ...prevState,
+      category: { value: text, isValid: true },
+    }));
+  };
+  const formValid = formHandler.category.isValid && formHandler.title.isValid;
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -19,23 +66,49 @@ const NewNoteForm = ({ navigation }) => {
 
       <View style={styles.form}>
         <View style={{ marginTop: 20 }}>
-          <Input title="Title" />
-        </View>
-        <View style={styles.select}>
-          <Text style={styles.label}>Category</Text>
-          <SelectList
-            search={false}
-            setSelected={() => {}}
-            data={data}
-            save="value"
-            boxStyles={{
-              borderColor: "lightgrey",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            inputStyles={{ fontSize: 20, fontFamily: "Helvetica Neue" }}
+          <Input
+            title="Title"
+            val={formHandler.title.value}
+            fun={inputHandler}
+            isValid={formHandler.title.isValid}
           />
         </View>
+        <View style={styles.select}>
+          <Text
+            style={[
+              styles.label,
+              !formHandler.category.isValid && { color: "#ff6c70" },
+            ]}
+          >
+            Category
+          </Text>
+          <SelectList
+            search={false}
+            setSelected={selectHandler}
+            data={data}
+            save="value"
+            boxStyles={[
+              styles.boxStyles,
+              !formHandler.category.isValid && styles.boxStylesInvalid,
+            ]}
+            inputStyles={[
+              { fontSize: 20, fontFamily: "Helvetica Neue" },
+              !formHandler.category.isValid && { color: "#ff6c70" },
+            ]}
+          />
+        </View>
+        {!formValid && (
+          <Text
+            style={{
+              marginTop: 35,
+              fontWeight: "bold",
+              color: "#ff6c70",
+              fontSize: 24,
+            }}
+          >
+            Check your inputs!
+          </Text>
+        )}
         <View style={{ marginTop: 20 }}>
           <TextButton fun={NextHandler}>Next</TextButton>
         </View>
@@ -95,5 +168,17 @@ const styles = StyleSheet.create({
     fontWeight: "700",
 
     fontFamily: "Helvetica Neue",
+  },
+  boxStyles: {
+    backgroundColor: "white",
+    borderColor: "lightgrey",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "black",
+  },
+  boxStylesInvalid: {
+    backgroundColor: "#ffc8c9",
+    borderColor: "#ffa3a6",
+    color: "#ff6c70",
   },
 });

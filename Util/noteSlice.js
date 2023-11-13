@@ -1,30 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Note } from "./NoteStructure";
 
 const initialState = {
   notes: [
     {
+      //date: new Date(),
       title: "Binioksowa Opowieść",
       text: "Binioks zjadł bułki z dżemem i został precelem",
       icon_category: "save",
       id: 1,
-    },
-    {
-      title: "Xddd",
-      text: "hah",
-      icon_category: "save",
-      id: 2,
-    },
-    {
-      title: "Xddd",
-      text: "hah",
-      icon_category: "save",
-      id: 3,
-    },
-    {
-      title: "Xddd",
-      text: "hah",
-      icon_category: "save",
-      id: 4,
+      html: "<div>",
     },
   ],
 };
@@ -39,9 +24,12 @@ const noteSlice = createSlice({
         1
       );
     },
+    newNote: ({ notes }, { payload }) => {
+      notes.push(payload);
+    },
   },
 });
 
-export const { deleteNote } = noteSlice.actions;
+export const { deleteNote, newNote } = noteSlice.actions;
 
 export default noteSlice.reducer;

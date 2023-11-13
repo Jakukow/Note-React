@@ -7,8 +7,15 @@ import {
 } from "react-native-pell-rich-editor";
 import { Colors } from "../Util/Colors";
 import TextButton from "../Buttons/TextButton";
-export default function NewNoteView() {
+import { htmlToText } from "html-to-text";
+import { Note } from "../Util/NoteStructure";
+import { useDispatch } from "react-redux";
+import { newNote } from "../Util/noteSlice";
+import { nanoid } from "@reduxjs/toolkit";
+
+export default function NewNoteView({ navigation, route }) {
   const richText = useRef();
+  const dispatch = useDispatch();
 
   const [descHTML, setDescHTML] = useState("");
 
@@ -18,6 +25,27 @@ export default function NewNoteView() {
     } else {
       setDescHTML("");
     }
+  };
+  const SaveHandler = () => {
+    const replaceHTML = descHTML
+      .replace(/<(.|)*?>/g, "")
+      .replace("\n", " ")
+      .trim();
+    const replaceWhiteSpace = replaceHTML.replace(/&nbsp;/g, "").trim();
+    const text = htmlToText(descHTML).replaceAll("\n", ", ");
+    if (!text) return;
+    const date = new Date().toISOString();
+    const createdNote = {
+      title: route.params.title,
+      text: text,
+      html: descHTML,
+      icon_category: route.params.category,
+      id: nanoid(),
+      date: date,
+    };
+
+    dispatch(newNote(createdNote));
+    navigation.navigate("NoteList");
   };
 
   return (
@@ -47,7 +75,7 @@ export default function NewNoteView() {
           style={styles.richTextEditorStyle}
           initialHeight={360}
         />
-        <TextButton>Save</TextButton>
+        <TextButton fun={SaveHandler}>Save</TextButton>
       </View>
     </View>
   );

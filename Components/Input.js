@@ -1,10 +1,16 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
-const Input = ({ title, fun }) => {
+const Input = ({ title, fun, val, isValid }) => {
+  let inputSyles = [styles.input];
+  if (!isValid) {
+    inputSyles.push(styles.invalidInput);
+  }
   return (
     <View style={styles.inputContainer}>
-      <Text style={styles.label}>{title}</Text>
-      <TextInput style={styles.input} />
+      <Text style={[styles.label, !isValid && { color: "#ff6c70" }]}>
+        {title}
+      </Text>
+      <TextInput style={inputSyles} value={val} onChangeText={fun} />
     </View>
   );
 };
@@ -30,5 +36,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "lightgrey",
     fontSize: 20,
+  },
+  invalidInput: {
+    backgroundColor: "#ffc8c9",
+    borderColor: "#ffa3a6",
   },
 });
