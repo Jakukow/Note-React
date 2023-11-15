@@ -3,11 +3,17 @@ import { StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CustomButton from "../Buttons/CustomButton";
 import { Colors } from "../Util/Colors";
-import { useDispatch } from "react-redux";
-import { deleteNote } from "../Util/noteSlice";
-
+import { useDispatch, useSelector } from "react-redux";
+import { deleteNote, viewNote } from "../Util/noteSlice";
+import { useNavigation } from "@react-navigation/native";
 const SingleNoteView = ({ title, description, category_icon, id }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const notes = useSelector((state) => state.note.notes);
+  const viewHandler = () => {
+    const fittedNote = notes.filter((note) => note.id === id);
+    navigation.navigate("ViewNote", fittedNote);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.categoryIcon}>
@@ -27,7 +33,9 @@ const SingleNoteView = ({ title, description, category_icon, id }) => {
           name="eye"
           size={24}
           color={Colors.plusButton}
-          onPress={() => {}}
+          onPress={() => {
+            viewHandler();
+          }}
         />
         <CustomButton
           name="create"

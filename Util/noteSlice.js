@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Note } from "./NoteStructure";
-
+import { useNavigation } from "@react-navigation/native";
 const initialState = {
   notes: [
     {
@@ -25,11 +25,11 @@ const noteSlice = createSlice({
       );
     },
     newNote: ({ notes }, { payload }) => {
-      notes.push(payload);
+      notes.unshift(payload);
     },
   },
 });
 
-export const { deleteNote, newNote } = noteSlice.actions;
+export const { deleteNote, newNote, viewNote } = noteSlice.actions;
 
 export default noteSlice.reducer;

@@ -8,6 +8,7 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import NewNoteForm from "./Screens/NewNoteForm";
 import NewNoteView from "./Screens/NewNoteView";
+import ViewNote from "./Screens/ViewNote";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default function App() {
               component={NewNoteView}
               options={{ gestureEnabled: false }}
             />
+            <Stack.Screen name="ViewNote" component={ViewNote} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

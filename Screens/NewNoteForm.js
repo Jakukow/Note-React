@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.note,
   },
   textContainer: {
-    marginTop: 60,
+    marginTop: 30,
     width: "100%",
     padding: 30,
   },
