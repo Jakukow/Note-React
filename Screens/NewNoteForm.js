@@ -16,7 +16,9 @@ const NewNoteForm = ({ navigation }) => {
     category: { value: null, isValid: true },
   });
   const NextHandler = () => {
-    const titleIsValid = formHandler.title.value.trim().length > 0;
+    const titleIsValid =
+      formHandler.title.value.trim().length > 0 &&
+      formHandler.title.value.length < 20;
     const categoryIsValid = !!formHandler.category.value;
     if (!titleIsValid || !categoryIsValid) {
       setFormHandler((prevaState) => ({
@@ -65,7 +67,7 @@ const NewNoteForm = ({ navigation }) => {
       </View>
 
       <View style={styles.form}>
-        <View style={{ marginTop: 20 }}>
+        <View style={{ marginTop: 20, marginBottom: 20 }}>
           <Input
             title="Title"
             val={formHandler.title.value}
@@ -73,6 +75,7 @@ const NewNoteForm = ({ navigation }) => {
             isValid={formHandler.title.isValid}
           />
         </View>
+
         <View style={styles.select}>
           <Text
             style={[
@@ -103,10 +106,10 @@ const NewNoteForm = ({ navigation }) => {
               marginTop: 35,
               fontWeight: "bold",
               color: "#ff6c70",
-              fontSize: 24,
+              fontSize: 15,
             }}
           >
-            Check your inputs!
+            Check your title length or your inputs!
           </Text>
         )}
         <View style={{ marginTop: 20 }}>
