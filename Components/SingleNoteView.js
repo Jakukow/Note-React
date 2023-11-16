@@ -14,6 +14,10 @@ const SingleNoteView = ({ title, description, category_icon, id }) => {
     const fittedNote = notes.filter((note) => note.id === id);
     navigation.navigate("ViewNote", fittedNote);
   };
+  const editHandler = () => {
+    const fittedNote = notes.filter((note) => note.id === id);
+    navigation.navigate("EditNote", fittedNote);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.categoryIcon}>
@@ -23,7 +27,7 @@ const SingleNoteView = ({ title, description, category_icon, id }) => {
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.textCont}>
           {description.length > 30
-            ? description.substring(0, 30) + " ..."
+            ? description.substring(0, 30) + "..."
             : description}
         </Text>
       </View>
@@ -41,7 +45,9 @@ const SingleNoteView = ({ title, description, category_icon, id }) => {
           name="create"
           size={24}
           color={Colors.plusButton}
-          onPress={() => {}}
+          onPress={() => {
+            editHandler();
+          }}
         />
         <CustomButton
           name="trash"
@@ -81,6 +87,7 @@ const styles = StyleSheet.create({
   textContainer: {
     marginRight: 25,
     minWidth: 200,
+    maxWidth: 200,
   },
   title: {
     fontSize: 20,

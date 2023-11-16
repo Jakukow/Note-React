@@ -1,11 +1,18 @@
-import { FlatList } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import SingleNoteView from "./SingleNoteView";
-import { useSelector } from "react-redux";
-const NoteList = () => {
-  const notes = useSelector((state) => state.note.notes);
+import { useDispatch, useSelector } from "react-redux";
+import { useLayoutEffect } from "react";
+import { sortNotes } from "../Util/noteSlice";
 
-  return (
+const NoteList = () => {
+  const dispatch = useDispatch();
+  const notes = useSelector((state) => state.note.notes);
+  useLayoutEffect(() => {
+    dispatch(sortNotes());
+  }, [notes]);
+
+  let content = (
     <FlatList
       data={notes}
       keyExtractor={(item) => item.id}
@@ -19,5 +26,26 @@ const NoteList = () => {
       )}
     />
   );
+  if (notes.length === 0) {
+    content = (
+      <View style={styles.textCont}>
+        <Text style={styles.txt}>Add new note!</Text>
+      </View>
+    );
+  }
+  return content;
 };
 export default NoteList;
+
+const styles = StyleSheet.create({
+  textCont: {
+    alignSelf: "center",
+    marginBottom: 40,
+    opacity: 0.5,
+  },
+  txt: {
+    fontSize: 35,
+    color: "grey",
+    fontWeight: "700",
+  },
+});

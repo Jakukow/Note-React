@@ -14,7 +14,7 @@ const ViewNote = ({ route }) => {
         <WebView
           style={{ borderBottomLeftRadius: 25, borderBottomRightRadius: 25 }}
           source={{
-            html: `<div style="padding:50;font-size:35">${note.html}</div>`,
+            html: `<div style="padding:50;font-family:'Helvetica';font-size:45;">${note.html}</div>`,
           }}
         />
       </View>

@@ -2,16 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Note } from "./NoteStructure";
 import { useNavigation } from "@react-navigation/native";
 const initialState = {
-  notes: [
-    {
-      //date: new Date(),
-      title: "Binioksowa Opowieść",
-      text: "Binioks zjadł bułki z dżemem i został precelem",
-      icon_category: "save",
-      id: 1,
-      html: "<div>",
-    },
-  ],
+  notes: [],
 };
 
 const noteSlice = createSlice({
@@ -27,9 +18,21 @@ const noteSlice = createSlice({
     newNote: ({ notes }, { payload }) => {
       notes.unshift(payload);
     },
+    editNote: ({ notes }, { payload }) => {
+      const idx = notes.findIndex((note) => note.id === payload.id);
+      notes[idx] = {
+        ...notes[idx],
+        text: payload.text,
+        html: payload.html,
+        date: payload.date,
+      };
+    },
+    sortNotes: ({ notes }) => {
+      notes.sort((a, b) => new Date(b.date) - new Date(a.date));
+    },
   },
 });
 
-export const { deleteNote, newNote, viewNote } = noteSlice.actions;
+export const { deleteNote, newNote, editNote, sortNotes } = noteSlice.actions;
 
 export default noteSlice.reducer;

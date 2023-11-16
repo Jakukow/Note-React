@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import NewNoteForm from "./Screens/NewNoteForm";
 import NewNoteView from "./Screens/NewNoteView";
 import ViewNote from "./Screens/ViewNote";
-
+import EditNoteView from "./Screens/EditNoteView";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -32,6 +32,7 @@ export default function App() {
               options={{ gestureEnabled: false }}
             />
             <Stack.Screen name="ViewNote" component={ViewNote} />
+            <Stack.Screen name="EditNote" component={EditNoteView} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
