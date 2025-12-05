@@ -2,9 +2,20 @@
 
 ###
 
-<p align="left">A simple note management app with text formatting</p>
+<p align="left">A simple note management app with text formatting built with React Native and Expo.</p>
 
-###
+---
+
+## 🛠 Tech Stack
+
+* **Framework:** React Native (Expo)
+* **State Management:** Redux Toolkit (React-Redux)
+* **Navigation:** React Navigation
+* **Editor:** React Native Pell Rich Editor (Rich Text Support)
+
+---
+
+## 📱 Screenshots & Features
 
 <p align="center">Your Notes screen:</p>
 
